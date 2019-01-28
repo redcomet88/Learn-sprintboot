@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <script src="../static/scripts/jquery-1.7.2.min.js"></script>
+    <title>Title</title>
+</head>
+<h1>一罐好运</h1>
+<body>
+<button id="webauth2">1.登录重定向*</button><button id="webauth">1.登录授权*</button><br/>
+<button id="getUserInfo">2.当前用户查询</button><br/>
+<button id="showData">获得数据</button><br/>
+<button id="yghy">创建一罐好运</button><br/>
+罐子号：<input type="text" id="canNum" /><br/>
+祝福语：<input type="text" id="wishWord" /><br/>
+<button id="thumb-up">3.帮赞</button><br/>
+<button id="getQRCode">5.二维码</button>
+<button id="drawPrize">6.抽奖</button>
+</body>
+<script>
+    $("#webauth").click(function(){
+        $.ajax({
+            url: "/yghy/webauth",
+            data:{userID:123,name:'程与'},
+            type: "post",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+    $("#webauth2").click(function(){
+        $.ajax({
+            url: "/user/webauth",
+            type: "get",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+    $("#getUserInfo").click(function(){
+        $.ajax({
+            url: "/yghy/getUserInfo",
+            data:{userID:123,name:'程与'},
+            type: "post",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+    $("#yghy").click(function(){
+        $.ajax({
+            url: "/yghy/create",
+            data:{userID:123,name:'程与'},
+            type: "post",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+    $("#thumb-up").click(function(){
+        var word = $("#wishWord").val();
+        var num = $("#canNum").val();
+        $.ajax({
+            url: "/yghy/thumb-up",
+            data:{id:1556,message:word,index:num},
+            type: "post",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+    $("#showData").click(function(){
+        var word = $("#wishWord").val();
+        var num = $("#canNum").val();
+        $.ajax({
+            url: "/yghy/showData",
+            data:{userID:1223,name:'jack'},
+            type: "post",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+    $("#getQRCode").click(function(){
+        $.ajax({
+            url: "/yghy/getQRCode",
+            data:{userID:123,name:'程与'},
+            type: "post",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+    $("#drawPrize").click(function(){
+        $.ajax({
+            url: "/yghy/drawPrize",
+            type: "post",
+            dataType: 'text',
+            success: function (text) {
+                alert(text);
+            },
+            error: function(text){
+                alert("其他错误");;
+            }
+        });
+    });
+
+</script>
+</html>
