@@ -38,13 +38,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/webauth")
-    public void webauth(HttpServletResponse response ){
+    public void webauth(HttpServletRequest request, HttpServletResponse response){
+        String state = request.getParameter("state");
+        if(null == state)
+            state = "";
         try {
             String url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ AuthUtil.APPID+
                     "&redirect_uri="+ URLEncoder.encode(backUrl,"UTF-8")+
                     "&response_type=code"+
                     "&scope=snsapi_userinfo"+
-                    "&state=STATE#wechat_redirect"; //state是页面间相互传参用的.
+                    "&state=" + state + "#wechat_redirect"; //state是页面间相互传参用的.
             response.sendRedirect(url);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +56,8 @@ public class UserController {
 
     @RequestMapping(value = "/callback")
     public void callback(HttpServletRequest request, HttpServletResponse response ){
-        String code=request.getParameter("code");
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
         String url="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+AuthUtil.APPID+
                 "&secret="+AuthUtil.APPSECRET+
                 "&code="+code+
@@ -89,7 +93,7 @@ public class UserController {
         }
 
         try {
-            response.sendRedirect("index");
+            response.sendRedirect("index?state=" + state  );
         } catch (IOException e) {
             e.printStackTrace();
         }

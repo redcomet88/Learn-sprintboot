@@ -75,6 +75,7 @@ public class YghyController {
         }
     }
 
+    /*
     @RequestMapping(value = "/create")
     @ResponseBody
     public String create(@RequestParam(value = "userID") String userID,@RequestParam(value = "name") String name,
@@ -88,6 +89,7 @@ public class YghyController {
         String json = JSON.Encode(hashmap);
         return json;
     }
+    */
     
     /**
      * @description:一罐好运，填写祝福语提交操作
@@ -121,17 +123,12 @@ public class YghyController {
     @ResponseBody
     public String getQRCode(HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
-        //存openid？
         String userID = (String) session.getAttribute("openid");
-        YghyVO y = yghyService.isNew(userID);
-        if(null == y) {
-            return "未参加活动";
-        }
-        else{
-            HashMap<String, Object> hashmap = new HashMap<String, Object>();
-            hashmap.put("yghy", y);
-            String json = JSON.Encode(hashmap);
-            return qrcodeServce.createQRCode(json,200,200);
-        }
+        String url = "http://106.13.52.59/yghy/webauth?state=" + userID;
+        //    HashMap<String, Object> hashmap = new HashMap<String, Object>();
+        //    hashmap.put("url", y);
+        //    String json = JSON.Encode(hashmap);
+        return qrcodeServce.createQRCode(url,200,200);
+
     }
 }
