@@ -5,10 +5,14 @@ import com.chensi.yghy.model.vo.YghyVO;
 import com.chensi.yghy.service.UserService;
 import com.chensi.yghy.service.YghyService;
 import com.chensi.yghy.util.AuthUtil;
+import com.chensi.yghy.util.JSON;
+import com.chensi.yghy.util.Sign;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 /**
  * @Description: User Controller
@@ -30,8 +35,12 @@ public class UserController {
     @Autowired
     private YghyService yghyService;
 
-    //private final String backUrl = "http://106.13.52.59/yghy/callback";
-    private final String backUrl = "http://jianlibao.coderbat.com/yghy/callback";
+    @Value("${appUrl}")
+    private String appUrl;
+    @Value("${wx.APPID}")
+    public  String APPID;
+    @Value("${wx.APPSECRET}")
+    public  String APPSECRET;
 
 
     @RequestMapping(value = "/index")
@@ -45,8 +54,8 @@ public class UserController {
         if(null == state)
             state = "";
         try {
-            String url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ AuthUtil.APPID+
-                    "&redirect_uri="+ URLEncoder.encode(backUrl,"UTF-8")+
+            String url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ APPID+
+                    "&redirect_uri="+ URLEncoder.encode(appUrl + "callback","UTF-8")+
                     "&response_type=code"+
                     "&scope=snsapi_userinfo"+
                     "&state=" + state + "#wechat_redirect"; //state是页面间相互传参用的.
@@ -60,8 +69,8 @@ public class UserController {
     public void callback(HttpServletRequest request, HttpServletResponse response ){
         String code = request.getParameter("code");
         String state = request.getParameter("state");
-        String url="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+AuthUtil.APPID+
-                "&secret="+AuthUtil.APPSECRET+
+        String url="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+
+                "&secret="+APPSECRET+
                 "&code="+code+
                 "&grant_type=authorization_code";
         JSONObject jsonObject= null;
@@ -127,6 +136,23 @@ public class UserController {
          System.out.println(userInfo.get("province"));  //省份
          System.out.println(userInfo.get("headimgurl")); //头像
          */
+    }
+
+    @RequestMapping(value = "/jssdk")
+    @ResponseBody
+    public String  jssdk(HttpServletRequest request, HttpServletResponse response){
+        String url = request.getParameter("url");
+        String jsapi_ticket = null;
+        String json = "";
+
+        try {
+            jsapi_ticket = AuthUtil.getJSApiTicket(APPID,APPSECRET);
+            Map<String, String> hashmap = Sign.sign(jsapi_ticket, url,APPID );
+            json = JSON.Encode(hashmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
 }

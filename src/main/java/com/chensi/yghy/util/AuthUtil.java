@@ -8,18 +8,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
 public class AuthUtil {
-	//已经是自己的appid了 开发者
-	public static final String APPID="wxc5b6f8b9184cc098";
-	public static final String APPSECRET="cf0a97fee84550dc3e9378eaedc2e2b9";
 
 	public static JSONObject doGetJson(String url) throws ClientProtocolException, IOException{
 		JSONObject jsonObject=null;
-		//过时了
-		//DefaultHttpClient client=new DefaultHttpClient();
 		HttpClient client= HttpClientBuilder.create().build();
 		HttpGet httpGet=new HttpGet(url);
 		HttpResponse response=client.execute(httpGet);
@@ -30,5 +26,22 @@ public class AuthUtil {
 		}
 		httpGet.releaseConnection();
 		return jsonObject;
+	}
+
+	public static String getAccessToken(String APPID,String APPSECRET) throws  IOException {
+		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + APPID + "&secret=" + APPSECRET + "";
+		JSONObject backData = doGetJson(url);
+		String accessToken=backData.getString("access_token");
+		return accessToken;
+	}
+
+	public static String getJSApiTicket(String APPID,String APPSECRET) throws IOException{
+		//获取token
+		String acess_token= getAccessToken(APPID,APPSECRET);
+		String urlStr = //"http://gy7tgr.natappfree.cc//wxapi/weixinMall/index.jsp";
+				"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+acess_token+"&type=jsapi";
+		JSONObject backData=doGetJson(urlStr);
+		String ticket = backData.getString("ticket");
+		return  ticket;
 	}
 }

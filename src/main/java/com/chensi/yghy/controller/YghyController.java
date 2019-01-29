@@ -7,6 +7,7 @@ import com.chensi.yghy.service.QRCodeService;
 import com.chensi.yghy.service.YghyService;
 import com.chensi.yghy.util.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +32,8 @@ public class YghyController {
     @Autowired
     private QRCodeService qrcodeServce;
 
-    private final String appUrl = "http://jianlibao.coderbat.com/yghy/";
+    @Value("${appUrl}")
+    private String appUrl;
 
     @RequestMapping(value = "/webauthXXXX")
     @ResponseBody
