@@ -31,6 +31,8 @@ public class YghyController {
     @Autowired
     private QRCodeService qrcodeServce;
 
+    private final String appUrl = "http://jianlibao.coderbat.com/yghy/";
+
     @RequestMapping(value = "/webauthXXXX")
     @ResponseBody
     public String webauth(@RequestParam(value = "userID") String userID, @RequestParam(value = "name") String name,
@@ -131,8 +133,8 @@ public class YghyController {
         }
         else {
             hashmap.put("result", 1);
-            YghyVO yVO = yghyService.isNew(userID);
-            hashmap.put("msg", yVO.getFormName());
+            //YghyVO yVO = yghyService.isNew(userID);
+            hashmap.put("msg", "点赞成功");
         }
 
         String json = JSON.Encode(hashmap);
@@ -145,7 +147,7 @@ public class YghyController {
     public String getQRCode(HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
         String userID = (String) session.getAttribute("openid");
-        String url = "http://106.13.52.59/yghy/webauth?state=" + userID;
+        String url = appUrl + "webauth?state=" + userID;
         //    HashMap<String, Object> hashmap = new HashMap<String, Object>();
         //    hashmap.put("url", y);
         //    String json = JSON.Encode(hashmap);
@@ -165,9 +167,13 @@ public class YghyController {
         if("NOT_FINISHED".equals(result)){
             hashmap.put("result", 0);
             hashmap.put("msg", "请集赞完成后再抽奖哦");
+            String json = JSON.Encode(hashmap);
+            return json;
         }else if("ALREADY_DRAW".equals(result)){
             hashmap.put("result", 0);
             hashmap.put("msg", "抽过奖了哟");
+            String json = JSON.Encode(hashmap);
+            return json;
         }
 
         synchronized (String.valueOf(userID).intern()) {
@@ -223,7 +229,8 @@ public class YghyController {
 
         HashMap<String, Object> hashmap = new HashMap<String, Object>();
         hashmap.put("result", 1);
-        hashmap.put("msg", "成功");
+        YghyVO yVO = yghyService.isNew(id);
+        hashmap.put("msg", yVO.getFormName());
         hashmap.put("collects", list);
         String json = JSON.Encode(hashmap);
         return json;

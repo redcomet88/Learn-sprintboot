@@ -30,7 +30,9 @@ public class UserController {
     @Autowired
     private YghyService yghyService;
 
-    private final String backUrl = "http://106.13.52.59/yghy/callback";
+    //private final String backUrl = "http://106.13.52.59/yghy/callback";
+    private final String backUrl = "http://jianlibao.coderbat.com/yghy/callback";
+
 
     @RequestMapping(value = "/index")
     public String index(){
