@@ -37,6 +37,23 @@ public class YghyService {
         return new YghyVO(y,list);
     }
 
+    @Transactional
+    public void save(String userID,String formname){
+        Yghy y = yghyRepository.findByUserID(userID);
+        y.setFormName(formname);
+        yghyRepository.save(y);
+    }
+
+    @Transactional
+    public void save(String userID,String address,String phone,String email,String contacts){
+        Yghy y = yghyRepository.findByUserID(userID);
+        y.setAddress(address);
+        y.setPhone(phone);
+        y.setEmail(email);
+        y.setContacts(contacts);
+        yghyRepository.save(y);
+    }
+
     public YghyVO isNew(String userID){
         Yghy y = yghyRepository.findByUserID(userID);
         if(null == y)
@@ -49,6 +66,12 @@ public class YghyService {
     public String wish(String userID, int nIndex, String message,String helpID,String helpNickName){
         //先查询是否已完成
         Collect collect = collectRepository.findByUserIDAndNIndex(userID,nIndex);
+
+        if(collect.getIsCollect() == 1)
+        {
+            return "THUMB_AGAIN";
+        }
+
         collect.setMessage(message);
         collect.setHelpID(helpID);
         collect.setIsCollect(1);
@@ -64,5 +87,25 @@ public class YghyService {
         }
 
         return "success";
+    }
+
+    public String preDraw(String userID){
+        Yghy y = yghyRepository.findByUserID(userID);
+       if(y.getIsCollected() != 1 )
+       {
+           return "NOT_FINISHED";
+       }
+        if(y.getIsDraw() == 1 )
+        {
+            return "ALREADY_DRAW";
+        }
+
+        return "OK";
+    }
+
+
+    public List<Collect> getCollects(String userID){
+        List<Collect> list = collectRepository.findByUserID(userID);
+        return list;
     }
 }
