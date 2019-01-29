@@ -1,15 +1,17 @@
 一罐好运H5
 ---
 ### 0功能点
--[ ] 生成一罐好运数据，第一罐祝福语就是生成者姓名，后面11罐分别有祝福者和祝福语两个数据
--[ ] 抽奖？怎么个中奖概率？记录用户信息、电话、定制内容、中奖地址，加几个备注
 
 ### 1接口
- -[X] 新建一罐好运
- -[X] 写祝福语
- -[ ] 返回用户的一罐好运数据
  
  ### 2测试
- 用yghy/webauth模拟授权登录设置session
+ 帮赞时可能存在BUG（？）
+ 
+ ### 3数据库初始化数据
+ insert into t_award(awardName,probability,amount) values ('未中奖',0.2,1000000);
+ insert into t_award(awardName,probability,amount) values ('卡券',0.5,700);
+ insert into t_award(awardName,probability,amount) values ('一般罐',0.25,250);
+ insert into t_award(awardName,probability,amount) values ('定制罐',0.05,50);
+
 
 

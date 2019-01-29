@@ -1,10 +1,13 @@
 package com.chensi.yghy.service;
 
+import com.chensi.yghy.model.Award;
 import com.chensi.yghy.model.Collect;
 import com.chensi.yghy.model.Yghy;
 import com.chensi.yghy.model.vo.YghyVO;
+import com.chensi.yghy.repository.AwardRepository;
 import com.chensi.yghy.repository.CollectRepository;
 import com.chensi.yghy.repository.YghyRepository;
+import com.chensi.yghy.util.LotteryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,8 @@ public class YghyService {
     private YghyRepository yghyRepository;
     @Autowired
     private CollectRepository collectRepository;
+    @Autowired
+    private AwardRepository awardRepository;
 
     @Transactional
     public YghyVO save(Yghy yghy){
@@ -107,5 +112,20 @@ public class YghyService {
     public List<Collect> getCollects(String userID){
         List<Collect> list = collectRepository.findByUserID(userID);
         return list;
+    }
+
+    @Transactional
+    public int drawPrize(String userID){
+        List<Award> listAward = awardRepository.findByAmountGreaterThan(0);
+        Award a = LotteryUtil.lottery(listAward);
+        int amount = a.getAmount() - 1;
+        a.setAmount(amount);
+        awardRepository.save(a);
+        Yghy y = yghyRepository.findByUserID(userID);
+        y.setIsDraw(1);
+        y.setPrizeType((int) a.getId());
+        yghyRepository.save(y);
+
+        return (int) a.getId();
     }
 }

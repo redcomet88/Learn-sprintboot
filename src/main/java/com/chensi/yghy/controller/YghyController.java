@@ -131,7 +131,8 @@ public class YghyController {
         }
         else {
             hashmap.put("result", 1);
-            hashmap.put("msg", "成功");
+            YghyVO yVO = yghyService.isNew(userID);
+            hashmap.put("msg", yVO.getFormName());
         }
 
         String json = JSON.Encode(hashmap);
@@ -167,6 +168,13 @@ public class YghyController {
         }else if("ALREADY_DRAW".equals(result)){
             hashmap.put("result", 0);
             hashmap.put("msg", "抽过奖了哟");
+        }
+
+        synchronized (String.valueOf(userID).intern()) {
+            int prizeType = yghyService.drawPrize(userID);
+            hashmap.put("prizeType",prizeType);
+            hashmap.put("result", 1);
+            hashmap.put("msg", "抽奖成功");
         }
 
         String json = JSON.Encode(hashmap);

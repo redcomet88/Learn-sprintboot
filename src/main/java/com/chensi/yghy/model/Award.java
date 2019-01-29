@@ -14,17 +14,13 @@ public class Award {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String userID;     //用户的ID
+    private String awardName;  //奖品名
 
-    private String name;       //用户的姓名，同时也是第一罐的内容
+    private double probability;//获奖概率
 
-    private String contents;   //定制的内容
+    private int    amount;     //奖品库存
 
-    private long awardId;      //奖品id
-
-    private String telephone;  //电话
-
-    private String address;    //地址
+    private String contents;   //定制的内容(Invalid)
 
     private String note1;      //备用1
 
@@ -38,20 +34,28 @@ public class Award {
         this.id = id;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getAwardName() {
+        return awardName;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setAwardName(String awardName) {
+        this.awardName = awardName;
     }
 
-    public String getName() {
-        return name;
+    public double getProbability() {
+        return probability;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProbability(double probability) {
+        this.probability = probability;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public String getContents() {
@@ -60,30 +64,6 @@ public class Award {
 
     public void setContents(String contents) {
         this.contents = contents;
-    }
-
-    public long getAwardId() {
-        return awardId;
-    }
-
-    public void setAwardId(long awardId) {
-        this.awardId = awardId;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getNote1() {
