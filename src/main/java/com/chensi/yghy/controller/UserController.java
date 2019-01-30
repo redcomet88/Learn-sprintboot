@@ -188,13 +188,22 @@ public class UserController {
         String access_token;
         String json = "";
 
+        if(null == userID)
+        {
+            HashMap<String, Object> hashmap = new HashMap<String, Object>();
+            hashmap.put("msg", "openid为null");
+            hashmap.put("result", 0);
+            json = JSON.Encode(hashmap);
+            return json;
+        }
+
         AccessToken accessToken = tokenService.findTokenByUserID(userID);
 
         if (accessToken == null || accessToken.getCreatedate().getTime() + Long.parseLong(accessToken.getExpiresin()) * 1000 < new Date().getTime()) {
             access_token = AuthUtil.getAccessToken(APPID, APPSECRET);
             if(null != access_token && !"".equals(access_token)) {
                 accessToken = new AccessToken();
-                accessToken.setId(userID);
+                accessToken.setUserID(userID);
                 accessToken.setAccessToken(access_token);
                 accessToken.setExpiresin("200");
                 accessToken.setCreatedate(new Date());

@@ -9,7 +9,7 @@ public class AccessToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private long id;
 
     private String userID;
 
@@ -27,11 +27,11 @@ public class AccessToken {
         this.userID = userID;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

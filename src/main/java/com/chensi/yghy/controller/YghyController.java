@@ -121,26 +121,31 @@ public class YghyController {
         if("".equals(message)) {
             hashmap.put("result", 0);
             hashmap.put("msg", "请填写祝福语");
+            String json = JSON.Encode(hashmap);
+            return json;
         }
         String openid = (String) session.getAttribute("openid");
         String nickname = (String) session.getAttribute("nickname");
         if(openid.equals(userID)){
             hashmap.put("result", 0);
             hashmap.put("msg", "自己不能给自己点赞哦");
+            String json = JSON.Encode(hashmap);
+            return json;
         }
         String result = yghyService.wish(openid,index,message,userID,nickname);
         if("THUMB_AGAIN".equals(result)){
             hashmap.put("result", 0);
             hashmap.put("msg", "不能重复点赞哦");
+            String json = JSON.Encode(hashmap);
+            return json;
         }
         else {
             hashmap.put("result", 1);
             //YghyVO yVO = yghyService.isNew(userID);
             hashmap.put("msg", "点赞成功");
+            String json = JSON.Encode(hashmap);
+            return json;
         }
-
-        String json = JSON.Encode(hashmap);
-        return json;
     }
 
 
