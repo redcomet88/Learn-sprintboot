@@ -22,9 +22,10 @@ public class TokenService {
         return token;
     }
 
-    @CachePut(key = "#token.userID")
-    public void save(AccessToken token){
-        tokenRepository.save(token);
+    @CachePut(key = "#token.getUserID()")
+    public AccessToken save(AccessToken token){
+        AccessToken tk = tokenRepository.save(token);
+        return tk;
     }
 
 }

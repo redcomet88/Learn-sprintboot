@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,6 +47,8 @@ public class UserController {
     public  String APPID;
     @Value("${wx.APPSECRET}")
     public  String APPSECRET;
+    @Value("${wx.TokenLiveSeconds}")
+    public  String LIVE_SECONDS;
 
 
     @RequestMapping(value = "/index")
@@ -204,7 +205,7 @@ public class UserController {
             accessToken = new AccessToken();
             accessToken.setUserID(userID);
             accessToken.setAccessToken(access_token);
-            accessToken.setExpiresin("200");
+            accessToken.setExpiresin(LIVE_SECONDS);
             accessToken.setCreatedate(new Date());
             //
             tokenService.save(accessToken);
@@ -212,7 +213,7 @@ public class UserController {
         else if(accessToken.getCreatedate().getTime() + Long.parseLong(accessToken.getExpiresin()) * 1000 < new Date().getTime()) {
             access_token = AuthUtil.getAccessToken(APPID, APPSECRET);
             accessToken.setAccessToken(access_token);
-            accessToken.setExpiresin("200");
+            accessToken.setExpiresin(LIVE_SECONDS);
             accessToken.setCreatedate(new Date());
             tokenService.save(accessToken);
         }
