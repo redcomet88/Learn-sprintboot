@@ -188,7 +188,7 @@ public class UserController {
         String access_token;
         String json = "";
 
-        AccessToken accessToken = tokenService.findTokenByID(userID);
+        AccessToken accessToken = tokenService.findTokenByUserID(userID);
 
         if (accessToken == null || accessToken.getCreatedate().getTime() + Long.parseLong(accessToken.getExpiresin()) * 1000 < new Date().getTime()) {
             access_token = AuthUtil.getAccessToken(APPID, APPSECRET);

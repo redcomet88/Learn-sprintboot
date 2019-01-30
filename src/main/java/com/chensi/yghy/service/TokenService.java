@@ -13,9 +13,9 @@ public class TokenService {
     private TokenRepository tokenRepository;
 
     @Cacheable(key = "#p0")
-    public AccessToken findTokenByID(String id){
+    public AccessToken findTokenByUserID(String userID){
         AccessToken token = null;
-        token = tokenRepository.findAccessTokenById(id);
+        token = tokenRepository.findAccessTokenByUserID(userID);
         return token;
     }
 

@@ -18,6 +18,6 @@ import java.util.List;
 public interface TokenRepository extends JpaRepository<AccessToken,Long> {
 
 
-    AccessToken findAccessTokenById(String id);
+    AccessToken findAccessTokenByUserID(String userID);
 
 }

@@ -7,13 +7,25 @@ import java.util.Date;
 @Table(name = "t_access_token")
 public class AccessToken {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
- 
+
+    private String userID;
+
     private String accessToken;
  
     private String expiresin;
  
     private Date createdate;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public String getId() {
         return id;
