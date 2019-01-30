@@ -1,7 +1,9 @@
 package com.chensi.yghy.controller;
 
+import com.chensi.yghy.model.AccessToken;
 import com.chensi.yghy.model.Yghy;
 import com.chensi.yghy.model.vo.YghyVO;
+import com.chensi.yghy.service.TokenService;
 import com.chensi.yghy.service.UserService;
 import com.chensi.yghy.service.YghyService;
 import com.chensi.yghy.util.AuthUtil;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +39,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private YghyService yghyService;
+    @Autowired
+    private TokenService tokenService;
 
     @Value("${appUrl}")
     private String appUrl;
@@ -149,6 +154,7 @@ public class UserController {
      * @return: java.lang.String        
      * @create: 2019/1/29 
      **/
+    /*
     @RequestMapping(value = "/wxGetToken")
     @ResponseBody
     public String  wxGetToken(){
@@ -163,6 +169,46 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return json;
+    }*/
+
+    /**
+     * @description:2.1_cache 获取令牌(ehcache)
+     *
+     * @author: redcomet
+     * @param: []
+     * @return: java.lang.String
+     * @create: 2019/1/29
+     **/
+    @RequestMapping(value = "/wxGetToken")
+    @ResponseBody
+    public String  wxGetToken(HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession();
+        String userID = (String) session.getAttribute("openid");
+        String access_token;
+        String json = "";
+
+        AccessToken accessToken = tokenService.findTokenByID(userID);
+
+        if (accessToken == null || accessToken.getCreatedate().getTime() + Long.parseLong(accessToken.getExpiresin()) * 1000 < new Date().getTime()) {
+            access_token = AuthUtil.getAccessToken(APPID, APPSECRET);
+            if(null != access_token && !"".equals(access_token)) {
+                accessToken = new AccessToken();
+                accessToken.setId(userID);
+                accessToken.setAccessToken(access_token);
+                accessToken.setExpiresin("200");
+                accessToken.setCreatedate(new Date());
+            }
+            if (accessToken == null) {
+                tokenService.save(accessToken);
+            }
+            tokenService.save(accessToken);
+        }
+
+        HashMap<String, Object> hashmap = new HashMap<String, Object>();
+        hashmap.put("accessToken", accessToken.getAccessToken());
+        json = JSON.Encode(hashmap);
+
         return json;
     }
 
