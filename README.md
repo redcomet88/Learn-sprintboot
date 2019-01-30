@@ -1,6 +1,9 @@
 一罐好运H5
 ---
 ### 0功能点
++ 微信的网页授权验证
++ 抽奖的并发实现
++ token缓存的解决
 
 ### 1接口
  
@@ -15,5 +18,10 @@
  insert into t_award(awardName,probability,amount) values ('一般罐',0.25,250);
  insert into t_award(awardName,probability,amount) values ('定制罐',0.05,50);
 
+### 4ehcache缓存创建方法
++ 在resources目录下创建ehcache.xml
++ springboot 配置spring缓存方案（配置ehcache.xml路径）
++ spring启动类增加注解@EnableCaching
++ 
 
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -138,16 +140,59 @@ public class UserController {
          */
     }
 
-    @RequestMapping(value = "/jssdk")
+
+    /**
+     * @description:2.1 获取令牌
+     *
+     * @author: redcomet
+     * @param: []
+     * @return: java.lang.String        
+     * @create: 2019/1/29 
+     **/
+    @RequestMapping(value = "/wxGetToken")
     @ResponseBody
-    public String  jssdk(HttpServletRequest request, HttpServletResponse response){
-        String url = request.getParameter("url");
+    public String  wxGetToken(){
+        String access_token;
+        String json = "";
+
+        try {
+            access_token = AuthUtil.getAccessToken(APPID,APPSECRET);
+            HashMap<String, Object> hashmap = new HashMap<String, Object>();
+            hashmap.put("accessToken", access_token);
+            json = JSON.Encode(hashmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    @RequestMapping(value = "/wxGetJsapiTicket")
+    @ResponseBody
+    public String  wxGetJsapiTicket(@RequestParam(value = "accessToken") String accessToken){
+        String ticket;
+        String json = "";
+
+        try {
+            ticket = AuthUtil.getJSApiTicket(APPID,APPSECRET,accessToken);
+            HashMap<String, Object> hashmap = new HashMap<String, Object>();
+            hashmap.put("ticket", ticket);
+            json = JSON.Encode(hashmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    @RequestMapping(value = "/wxGetSignature")
+    @ResponseBody
+    public String  wxGetSignature(@RequestParam(value = "url") String url,
+                                  @RequestParam(value = "nonceStr")String nonce_str,@RequestParam(value = "timestamp")String timestamp){
         String jsapi_ticket = null;
         String json = "";
 
         try {
             jsapi_ticket = AuthUtil.getJSApiTicket(APPID,APPSECRET);
-            Map<String, String> hashmap = Sign.sign(jsapi_ticket, url,APPID );
+            Map<String, String> hashmap = Sign.sign(jsapi_ticket, url,APPID, nonce_str, timestamp);
             json = JSON.Encode(hashmap);
         } catch (IOException e) {
             e.printStackTrace();

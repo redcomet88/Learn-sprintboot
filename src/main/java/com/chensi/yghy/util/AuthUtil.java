@@ -36,8 +36,17 @@ public class AuthUtil {
 	}
 
 	public static String getJSApiTicket(String APPID,String APPSECRET) throws IOException{
-		//ªÒ»°token
+		//Ëé∑ÂèñgetAccessToken
 		String acess_token= getAccessToken(APPID,APPSECRET);
+		String urlStr = //"http://gy7tgr.natappfree.cc//wxapi/weixinMall/index.jsp";
+				"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+acess_token+"&type=jsapi";
+		JSONObject backData=doGetJson(urlStr);
+		String ticket = backData.getString("ticket");
+		return  ticket;
+	}
+
+	public static String getJSApiTicket(String APPID,String APPSECRET,String acess_token) throws IOException{
+
 		String urlStr = //"http://gy7tgr.natappfree.cc//wxapi/weixinMall/index.jsp";
 				"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+acess_token+"&type=jsapi";
 		JSONObject backData=doGetJson(urlStr);

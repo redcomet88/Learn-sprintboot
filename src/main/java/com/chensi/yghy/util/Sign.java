@@ -13,10 +13,10 @@ import java.util.UUID;
 
 public class Sign {
 
-    public static Map<String, String> sign(String jsapi_ticket, String url, String APPID) throws IOException {
+    public static Map<String, String> sign(String jsapi_ticket, String url, String APPID,String nonce_str,String  timestamp) throws IOException {
         Map<String, String> ret = new HashMap<String, String>();
-        String nonce_str = create_nonce_str();
-        String timestamp = create_timestamp();
+        //String nonce_str = create_nonce_str();
+        //String timestamp = create_timestamp();
         String string1;
         String signature = "";
         
