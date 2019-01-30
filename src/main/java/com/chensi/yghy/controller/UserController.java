@@ -196,21 +196,24 @@ public class UserController {
             json = JSON.Encode(hashmap);
             return json;
         }
-
         AccessToken accessToken = tokenService.findTokenByUserID(userID);
 
-        if (accessToken == null || accessToken.getCreatedate().getTime() + Long.parseLong(accessToken.getExpiresin()) * 1000 < new Date().getTime()) {
+        //如果accessToken不存在，新建
+        if (accessToken == null) {
             access_token = AuthUtil.getAccessToken(APPID, APPSECRET);
-            if(null != access_token && !"".equals(access_token)) {
-                accessToken = new AccessToken();
-                accessToken.setUserID(userID);
-                accessToken.setAccessToken(access_token);
-                accessToken.setExpiresin("200");
-                accessToken.setCreatedate(new Date());
-            }
-            if (accessToken == null) {
-                tokenService.save(accessToken);
-            }
+            accessToken = new AccessToken();
+            accessToken.setUserID(userID);
+            accessToken.setAccessToken(access_token);
+            accessToken.setExpiresin("200");
+            accessToken.setCreatedate(new Date());
+            //
+            tokenService.save(accessToken);
+        }//如果存在，只是超时，需要更新
+        else if(accessToken.getCreatedate().getTime() + Long.parseLong(accessToken.getExpiresin()) * 1000 < new Date().getTime()) {
+            access_token = AuthUtil.getAccessToken(APPID, APPSECRET);
+            accessToken.setAccessToken(access_token);
+            accessToken.setExpiresin("200");
+            accessToken.setCreatedate(new Date());
             tokenService.save(accessToken);
         }
 

@@ -15,14 +15,14 @@ public class TokenService {
     @Autowired
     private TokenRepository tokenRepository;
 
-    @Cacheable(key = "#p0")
+    @Cacheable(key = "#userID")
     public AccessToken findTokenByUserID(String userID){
         AccessToken token = null;
-        token = tokenRepository.findAccessTokenByUserID(userID);
+        token = tokenRepository.findByUserID(userID);
         return token;
     }
 
-    @CachePut(key = "#p0")
+    @CachePut(key = "#token.userID")
     public void save(AccessToken token){
         tokenRepository.save(token);
     }
