@@ -44,7 +44,7 @@ public class TokenService {
             accessToken.setCreatedate(new Date());
             this.save(accessToken);
         }
-        return access_token;
+        return accessToken.getAccessToken();
     }
 
     @Cacheable(key = "#userID")
