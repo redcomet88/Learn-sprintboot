@@ -1,0 +1,839 @@
+@keyframes btnScale {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes bgMove {
+  0% {
+    transform: translate3d(0, 0px, 0px);
+  }
+  100% {
+    transform: translate3d(50%, 0px, 0px);
+  }
+}
+@keyframes bgMoveLeft {
+  0% {
+    transform: translate3d(0, 0px, 0px);
+  }
+  100% {
+    transform: translate3d(-50%, 0px, 0px);
+  }
+}
+html {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+article,
+aside,
+audio,
+body,
+dd,
+div,
+dl,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+iframe,
+input,
+label,
+menu,
+nav,
+ol,
+p,
+section,
+select,
+td,
+textarea,
+th,
+time,
+ul,
+video {
+  margin: 0;
+  padding: 0;
+}
+body {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.music-logo {
+  z-index: 101;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background-image: url("../img/music.gif");
+  width: 30px;
+  height: 30px;
+  background-size: 30px auto;
+}
+.playing {
+  animation: 2.3s spin linear infinite;
+}
+.content {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+.loadPage {
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../img/load-bg.jpg');
+  background-size: 60px auto;
+}
+.loadPage .loadPic {
+  color: #fffffc;
+  text-align: center;
+}
+.loadPage .bottle {
+  text-align: center;
+}
+.loadPage .bottle {
+  width: 83px;
+  height: 144px;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+}
+.loadPage .bottle .background {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.loadPage .bottle .full {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip: rect(144px 83px 144px 0px);
+}
+.loadPage .bottle .progress {
+  position: absolute;
+  width: 100%;
+  top: 48px;
+}
+.loadPage .bottle .wave {
+  width: 81px;
+  height: 37px;
+  position: absolute;
+  bottom: 0px;
+  right: 1px;
+  /*transform: scale(0.1);*/
+}
+.cp-preloader {
+  font-size: 22px;
+  margin: 38px 0 60px 0;
+  font-family: "Source Han Sans CN";
+  letter-spacing: 5px;
+}
+.screen {
+  -webkit-transition: all 1s ease-in-out;
+  position: relative;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+.layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  -webkit-transform: translate3d(100%, 0px, 0px);
+  transform: translate3d(100%, 0px, 0px);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+.cloud1 {
+  width: 750px;
+  height: auto;
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  animation: bgMove 30s infinite linear;
+}
+.cloud3 {
+  width: 750px;
+  height: auto;
+  position: absolute;
+  bottom: -45px;
+  left: 0;
+  animation: bgMoveLeft 200s infinite linear;
+}
+.cloud2 {
+  width: 750px;
+  height: auto;
+  position: absolute;
+  bottom: 185px;
+  right: 0;
+  animation: bgMove 400s infinite linear;
+}
+/*欢迎界面*/
+.indexPage {
+  background-image: url("../img/bg-begin.jpg");
+  background-size: 100% auto;
+  text-align: center;
+}
+.indexPage .beginBtn {
+  position: absolute;
+  bottom: 22px;
+  width: 100%;
+  text-align: center;
+}
+.indexPage .beginBtn img {
+  width: 139px;
+  height: auto;
+}
+.indexPage .mascot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: auto;
+  width: 93%;
+}
+/*主界面*/
+.drawMain {
+  background-image: url("../img/bg-main.jpg");
+  background-size: 100% auto;
+  text-align: center;
+}
+.drawMain .bgBottom {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.drawMain .introduceBtn {
+  position: absolute;
+  width: 70px;
+  height: 85px;
+  left: 2.5%;
+  top: 25.86%;
+}
+.drawMain .introduceDialog {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.drawMain .introduceDialog .dailog-content {
+  width: 78.5%;
+  height: 57.87%;
+  background-color: #000000;
+  opacity: 0.85;
+  margin-left: 0px;
+  border-radius: 10px;
+}
+.drawMain .introduceDialog .dailog-content .header {
+  padding: 6px;
+  text-align: right;
+}
+.drawMain .introduceDialog .dailog-content .header .closeBtn {
+  text-align: center;
+  display: inline-block;
+  color: white;
+  font-size: 16.625px;
+  font-family: "PingFang SC";
+  background-color: #7c7c7b;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  border-radius: 50%;
+}
+.drawMain .introduceDialog .dailog-content .text {
+  padding: 21px;
+  font-size: 13px;
+  margin-top: 32px;
+  color: white;
+  text-align: justify;
+  line-height: 32px;
+  letter-spacing: 1px;
+}
+.drawMain .nameDialog,
+.drawMain .addressDialog {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.drawMain .nameDialog .dailog-content,
+.drawMain .addressDialog .dailog-content {
+  position: absolute;
+  margin-top: 65px;
+  width: 73%;
+}
+.drawMain .nameDialog .dailog-content .form-logo,
+.drawMain .addressDialog .dailog-content .form-logo {
+  position: absolute;
+  width: 100%;
+  top: -85px;
+  text-align: center;
+}
+.drawMain .nameDialog .dailog-content .form-logo img,
+.drawMain .addressDialog .dailog-content .form-logo img {
+  width: 163px;
+  height: 138px;
+}
+.drawMain .nameDialog .dailog-content .borderTop,
+.drawMain .addressDialog .dailog-content .borderTop,
+.drawMain .nameDialog .dailog-content .borderBottom,
+.drawMain .addressDialog .dailog-content .borderBottom {
+  width: 100%;
+  position: relative;
+  padding-bottom: 8.42490842%;
+}
+.drawMain .nameDialog .dailog-content .borderTop img,
+.drawMain .addressDialog .dailog-content .borderTop img,
+.drawMain .nameDialog .dailog-content .borderBottom img,
+.drawMain .addressDialog .dailog-content .borderBottom img {
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.drawMain .nameDialog .dailog-content .content,
+.drawMain .addressDialog .dailog-content .content {
+  width: 100%;
+  background: url("../img/nameBg.png") repeat-y;
+  background-size: 100% auto;
+  padding: 45px 0 12px 0;
+}
+.drawMain .nameDialog .dailog-content .content .btnDiv,
+.drawMain .addressDialog .dailog-content .content .btnDiv {
+  margin-top: 48px;
+}
+.drawMain .nameDialog .dailog-content .content .btnDiv img,
+.drawMain .addressDialog .dailog-content .content .btnDiv img {
+  width: 124px;
+  height: 29px;
+}
+.drawMain .myBottleDialog {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 50px;
+}
+.drawMain .myBottleDialog .sharBtn,
+.drawMain .myBottleDialog .drawBtn,
+.drawMain .myBottleDialog .thumbsupBtn,
+.drawMain .myBottleDialog .helpBtn {
+  margin-top: 8px;
+}
+.drawMain .myBottleDialog .sharBtn span,
+.drawMain .myBottleDialog .drawBtn span,
+.drawMain .myBottleDialog .thumbsupBtn span,
+.drawMain .myBottleDialog .helpBtn span {
+  display: inline-block;
+  width: 170px;
+  height: 46px;
+  line-height: 46px;
+  font-size: 18px;
+  font-family: "Source Han Sans CN";
+  font-weight: bold;
+  text-shadow: #9a2d04 1px 0 0;
+  background-image: url("../img/btn-share.png");
+  background-size: 100% auto;
+  color: white;
+}
+.drawMain .myBottleDialog .helpOther {
+  width: 100%;
+}
+.drawMain .myBottleDialog .helpOther .form-control {
+  text-align: center;
+  color: white;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: none;
+  border-bottom: 2px solid white;
+  border-radius: 0;
+  outline: none;
+}
+.drawMain .myBottleDialog .helpBtn {
+  margin-top: 9px;
+}
+.drawMain .myBottleDialog .helpBtn span {
+  width: 180px;
+  height: 48px;
+  background-image: url("../img/btn-help.png");
+}
+.drawMain .myBottleDialog .drawBtn span {
+  background-image: url("../img/btn-draw.png");
+}
+.drawMain .myBottleDialog .thumbsupBtn {
+  margin-top: 18px;
+}
+.drawMain .myBottleDialog .thumbsupBtn span {
+  background-image: url("../img/btn-my.png");
+}
+.drawMain .myBottleDialog .bottles {
+  width: 100%;
+  position: relative;
+}
+.drawMain .myBottleDialog .swiper-container {
+  width: 78%;
+}
+.drawMain .myBottleDialog .swiper-button-next {
+  width: 33px;
+  height: 48px;
+  background-image: url("../img/swiper-arrow.png");
+  box-shadow: none;
+  outline: none;
+}
+.drawMain .myBottleDialog .swiper-button-prev {
+  width: 33px;
+  height: 48px;
+  background-image: url("../img/swiper-arrow.png");
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  box-shadow: none;
+  outline: none;
+}
+.drawMain .myBottleDialog .swiper-slide {
+  width: 94px;
+  height: 162px;
+  background: url("../img/bottle.png") no-repeat center;
+  background-size: auto 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.drawMain .myBottleDialog .swiper-slide .author {
+  position: absolute;
+  font-size: 12px;
+  transform: scale(0.7);
+  left: 0;
+  right: 0;
+  width: 100%;
+  bottom: 25px;
+  font-weight: bold;
+}
+.drawMain .myBottleDialog .swiper-slide span {
+  margin-bottom: 10px;
+  font-weight: bold;
+  line-height: 120%;
+  color: #c91c17;
+  font-size: 18px;
+  word-wrap: break-word;
+  vertical-align: center;
+  display: inline-block;
+  width: 18px;
+}
+.shareLayer {
+  background-image: url("../img/bg-main2.jpg");
+  background-size: 100% auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.shareLayer .sharelog {
+  z-index: 10;
+  width: 109px;
+  height: 137px;
+  position: absolute;
+  right: 20px;
+  bottom: 156px;
+}
+.shareLayer .bottle {
+  z-index: 10;
+  margin-top: 70px;
+  width: 140px;
+  height: 241px;
+  background: url("../img/bottle2.png");
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.shareLayer .bottle span {
+  font-weight: bold;
+  line-height: 120%;
+  color: #c91c17;
+  font-size: 29px;
+  word-wrap: break-word;
+  vertical-align: center;
+  display: inline-block;
+  width: 30px;
+  padding-bottom: 10px;
+}
+.shareLayer .btnDiv {
+  text-align: center;
+  margin-top: 28px;
+}
+.shareLayer .btnDiv img {
+  width: 50%;
+  height: auto;
+}
+.shareLayer .QRcode {
+  margin-top: 16px;
+}
+.shareLayer .QRcode img {
+  width: 80px;
+  height: 80px;
+}
+.prizeLayer {
+  background-image: url("../img/bg-prize.jpg");
+  background-size: 100% auto;
+  text-align: center;
+}
+.prizeLayer .bgBottom {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.prizeLayer .drawPrizeDialog {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.prizeLayer .drawPrizeDialog .bottles {
+  display: flex;
+}
+.prizeLayer .drawPrizeDialog .bottles .bottle {
+  background-image: url("../img/bottle.png");
+  background-size: cover;
+  width: 86px;
+  height: 148px;
+  margin: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.prizeLayer .drawPrizeDialog .bottles .bottle span {
+  margin-bottom: 10px;
+  font-weight: bold;
+  line-height: 120%;
+  color: #c91c17;
+  font-size: 18px;
+  word-wrap: break-word;
+  vertical-align: center;
+  display: inline-block;
+  width: 18px;
+}
+.prizeLayer .drawPrizeDialog .bottles .bottle .cover {
+  z-index: 6;
+  display: inline-block;
+  background-color: #c8c8c8;
+  border-radius: 5px;
+  width: 48px;
+  height: 110px;
+  position: absolute;
+  vertical-align: center;
+  left: 19px;
+  top: 17px;
+}
+.prizeLayer .drawPrizeDialog .bottles .bottle .cover span {
+  padding-top: 18px;
+  line-height: 120%;
+  color: #a8a8a8;
+  font-size: 16px;
+  word-wrap: break-word;
+  vertical-align: center;
+  display: inline-block;
+  width: 18px;
+}
+.prizeLayer .addressDialog {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.prizeLayer .addressDialog .dailog-content {
+  position: absolute;
+  margin-top: 0px;
+  width: 73%;
+}
+.prizeLayer .addressDialog .dailog-content .form-logo {
+  position: absolute;
+  width: 100%;
+  top: -85px;
+  text-align: center;
+}
+.prizeLayer .addressDialog .dailog-content .form-logo img {
+  width: 163px;
+  height: 138px;
+}
+.prizeLayer .addressDialog .dailog-content .borderTop,
+.prizeLayer .addressDialog .dailog-content .borderBottom {
+  width: 100%;
+  position: relative;
+  padding-bottom: 8.42490842%;
+}
+.prizeLayer .addressDialog .dailog-content .borderTop img,
+.prizeLayer .addressDialog .dailog-content .borderBottom img {
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.prizeLayer .addressDialog .dailog-content .content {
+  width: 100%;
+  background: url("../img/nameBg.png") repeat-y;
+  background-size: 100% auto;
+  padding: 45px 0 12px 0;
+}
+.prizeLayer .addressDialog .dailog-content .content .btnDiv {
+  margin-top: 48px;
+}
+.prizeLayer .addressDialog .dailog-content .content .btnDiv img {
+  width: 124px;
+  height: 29px;
+}
+.prizeLayer .prizeResult1Dialog {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+.prizeLayer .prizeResult1Dialog .ticketInfo {
+  border-radius: 10px;
+  margin-top: 5px;
+  width: 100%;
+}
+.prizeLayer .prizeResult1Dialog .ticketInfo textarea {
+  width: 66%;
+  border-radius: 5px;
+}
+.prizeLayer .prizeResult1Dialog .ticket {
+  color: #8c1d1b;
+  background-color: white;
+}
+.prizeLayer .prizeResult1Dialog .firework {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 95%;
+  height: auto;
+}
+.prizeLayer .prizeResult1Dialog .bottles {
+  width: 100%;
+  min-height: 40px;
+  position: absolute;
+  top: 83px;
+  text-align: center;
+}
+.prizeLayer .prizeResult1Dialog .bottles .bottle {
+  margin: auto;
+  background-image: url("../img/bottle.png");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  width: 86px;
+  height: 148px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.prizeLayer .prizeResult1Dialog .bottles .bottle span {
+  margin-bottom: 10px;
+  font-weight: bold;
+  line-height: 120%;
+  color: #c91c17;
+  font-size: 18px;
+  word-wrap: break-word;
+  vertical-align: center;
+  display: inline-block;
+  margin: auto;
+  width: 18px;
+}
+.prizeLayer .prizeResult1Dialog .resultInfo {
+  padding: 0px 10px 0 10px;
+  font-size: 20px;
+  color: #ffffff;
+  z-index: 20;
+}
+.prizeLayer .prizeResult1Dialog .tip {
+  padding: 5px;
+  font-size: 10px;
+  color: #a8a8a8;
+}
+.prizeLayer .prizeResult1Dialog .btn span {
+  display: inline-block;
+  width: 124px;
+  height: 29px;
+  line-height: 29px;
+  font-size: 10px;
+  font-family: "Source Han Sans CN";
+  font-weight: bold;
+  text-shadow: #9a2d04 1px 0 0;
+  background-image: url("../img/btn-contact.png");
+  background-size: cover;
+  color: white;
+}
+.prizeLayer .prizeResult1Dialog .ticketlogo {
+  display: inline-block;
+  width: 38%;
+  height: auto;
+  position: absolute;
+  top: 45px;
+  text-align: center;
+  right: 74px;
+}
+.prizeLayer .prizeResult1Dialog .msgs {
+  width: 70%;
+  position: relative;
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.prizeLayer .prizeResult1Dialog .msgs .topImg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: 0;
+  height: auto;
+}
+.prizeLayer .prizeResult1Dialog .msgs .bottomImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.prizeLayer .prizeResult1Dialog .msgs .msgbox {
+  background: url("../img/msgbg.png") repeat-y;
+  overflow-y: auto;
+  background-size: 100% auto;
+  height: 150px;
+  padding-top: 20px;
+}
+.prizeLayer .prizeResult1Dialog .msgs .msgbox .col1 {
+  display: block;
+  text-align: right;
+  float: left;
+  width: 19.4%;
+  height: 36px;
+  line-height: 36px;
+}
+.prizeLayer .prizeResult1Dialog .msgs .msgbox .col2 {
+  display: block;
+  float: right;
+  width: 75%;
+  height: 36px;
+  line-height: 36px;
+  text-align: left;
+  font-size: 12px;
+  overflow-x: hidden;
+}
+.prizeLayer .prizeResult1Dialog .msgs .msgbox .row {
+  width: 100%;
+}
+.prizeLayer .prizeResult1Dialog .msgs .msgbox .rect {
+  margin-top: 6px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #dcdcdc;
+  border: #b5b5b5 1px solid;
+}
+.prizeLayer .addressDialog {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.prizeLayer .addressDialog .content > div {
+  padding: 10px 0 10px 0;
+}
+.prizeLayer .addressDialog .dailog-content .content .btnDiv {
+  margin-top: 10px;
+}
+.prizeLayer .addressDialog .dailog-content .content .btnDiv img {
+  width: 124px;
+  height: 29px;
+}
+.form-control {
+  background: #e5e5e5 none;
+  outline: none;
+  border: 1px solid #e5e6e7;
+  border-radius: 10px;
+  color: inherit;
+  display: inline-block;
+  padding: 6px 12px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  width: 50%;
+  background-clip: padding-box;
+  box-shadow: none;
+  text-decoration: none;
+  text-indent: 0;
+  font-size: 15px;
+  box-shadow: inset 2px 3px 9px #d4d4d4;
+}
+.errorMsg {
+  text-align: center;
+  color: red;
+  font-size: 15px;
+}
+.form-control::placeholder,
+.form-control::-webkit-input-placeholder {
+  color: #999999;
+  font-size: 9px;
+  line-height: 18px;
+}
+.form-control:focus {
+  border-color: #1ab394;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+/*# sourceMappingURL=index.css.map */

@@ -77,6 +77,13 @@ public class YghyService {
             return "THUMB_AGAIN";
         }
 
+        long countWish = collectRepository.countByUserIDAndHelpID(userID,helpID);
+
+        if(countWish >= 1)
+        {
+            return "THUMB_AGAIN";
+        }
+
         collect.setMessage(message);
         collect.setHelpID(helpID);
         collect.setIsCollect(1);

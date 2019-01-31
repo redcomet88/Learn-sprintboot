@@ -17,4 +17,6 @@ public interface CollectRepository  extends JpaRepository<Collect,Long> {
     Collect findByUserIDAndNIndex(String userID,int nIndex);
 
     long countByUserIDAndIsCollect(String userID,int isCollect);
+
+    long countByUserIDAndHelpID(String userID, String helpID);
 }

@@ -197,29 +197,10 @@ public class UserController {
             json = JSON.Encode(hashmap);
             return json;
         }
-        AccessToken accessToken = tokenService.findTokenByUserID(userID);
-
-        //如果accessToken不存在，新建
-        if (accessToken == null) {
-            access_token = AuthUtil.getAccessToken(APPID, APPSECRET);
-            accessToken = new AccessToken();
-            accessToken.setUserID(userID);
-            accessToken.setAccessToken(access_token);
-            accessToken.setExpiresin(LIVE_SECONDS);
-            accessToken.setCreatedate(new Date());
-            //
-            tokenService.save(accessToken);
-        }//如果存在，只是超时，需要更新
-        else if(accessToken.getCreatedate().getTime() + Long.parseLong(accessToken.getExpiresin()) * 1000 < new Date().getTime()) {
-            access_token = AuthUtil.getAccessToken(APPID, APPSECRET);
-            accessToken.setAccessToken(access_token);
-            accessToken.setExpiresin(LIVE_SECONDS);
-            accessToken.setCreatedate(new Date());
-            tokenService.save(accessToken);
-        }
+        access_token = tokenService.getaccessToken(userID,APPID,APPSECRET,LIVE_SECONDS);
 
         HashMap<String, Object> hashmap = new HashMap<String, Object>();
-        hashmap.put("accessToken", accessToken.getAccessToken());
+        hashmap.put("accessToken", access_token);
         json = JSON.Encode(hashmap);
 
         return json;
@@ -244,14 +225,19 @@ public class UserController {
 
     @RequestMapping(value = "/wxGetSignature")
     @ResponseBody
-    public String  wxGetSignature(@RequestParam(value = "url") String url,
+    public String  wxGetSignature(@RequestParam(value = "url") String url,HttpServletRequest request,
                                   @RequestParam(value = "nonceStr")String nonce_str,@RequestParam(value = "timestamp")String timestamp){
         String jsapi_ticket = null;
         String json = "";
+        HttpSession session = request.getSession();
+        String userID = (String) session.getAttribute("openid");
 
         try {
-            jsapi_ticket = AuthUtil.getJSApiTicket(APPID,APPSECRET);
-            Map<String, String> hashmap = Sign.sign(jsapi_ticket, url,APPID, nonce_str, timestamp);
+            //签名的时候不能去调用access_token了，从缓存里取
+            //jsapi_ticket = AuthUtil.getJSApiTicket(APPID,APPSECRET);
+            String access_token = tokenService.getaccessToken(userID,APPID,APPSECRET,LIVE_SECONDS);
+            String ticket = AuthUtil.getJSApiTicket(APPID,APPSECRET,access_token);
+            Map<String, String> hashmap = Sign.sign(ticket, url,APPID, nonce_str, timestamp);
             json = JSON.Encode(hashmap);
         } catch (IOException e) {
             e.printStackTrace();
