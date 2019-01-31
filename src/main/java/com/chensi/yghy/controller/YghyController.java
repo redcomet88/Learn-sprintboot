@@ -65,6 +65,7 @@ public class YghyController {
         else{
             HashMap<String, Object> hashmap = new HashMap<String, Object>();
             hashmap.put("id", y.getId());
+            hashmap.put("userID",y.getUserID());
             hashmap.put("nickname", y.getNickName());
             hashmap.put("formname", y.getFormName());
             hashmap.put("collects", y.getList());
@@ -132,7 +133,8 @@ public class YghyController {
             String json = JSON.Encode(hashmap);
             return json;
         }
-        String result = yghyService.wish(openid,index,message,userID,nickname);
+        //这个接口是帮赞人调用的，所以openid是帮赞人
+        String result = yghyService.wish(userID,index,message,openid,nickname);
         if("THUMB_AGAIN".equals(result)){
             hashmap.put("result", 0);
             hashmap.put("msg", "不能重复点赞哦");
